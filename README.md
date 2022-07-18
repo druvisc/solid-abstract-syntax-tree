@@ -12,7 +12,7 @@ The current `Node` API breaks the SOLID interface segregation principle:
 const Node = (operator, value, left, right) => { .. };
 ```
 
-It forces to pass an empty string for the `operation` parameter and `null` for the `left` and `right` nodes for the leaf (value) nodes and `null` for the `value` parameter for internal (operation) nodes:
+It forces to pass an empty string for the `operator` parameter and `null` for the `left` and `right` nodes for the leaf (value) nodes and `null` for the `value` parameter for internal (operation) nodes:
 
 ```js
 const valueNode1 = Node("", 4, null, null);
@@ -132,7 +132,7 @@ const tree = Divide(
 The initial `Node` API implementation is missing any kind of encapsulation, exposing implementation details as every property and method is available:
 
 ```js
-const node = {
+return {
   operator,
   value,
   left,
@@ -271,15 +271,17 @@ const tree = Divide(
 Following point 4 and point 5, for input validaiton we can create a separate validation module:
 
 ```js
+const { number } = require("../utils");
+
 const validateValue = (value) => {
-  if (typeof value !== "number") {
-    throw new Error(`The "${value}" is not a numerical value!`);
+  if (!number.isNumber(value)) {
+    throw new Error(`The value "${value}" is not a numerical value!`);
   }
 };
 
 const validateExpression = (left, right, operation) => {
   if (!left?.result || !right?.result) {
-    throw new Error(`The "${operation}" operation is missing an operand!`);
+    throw new Error(`The operation "${operation}" is missing an operand!`);
   }
 };
 

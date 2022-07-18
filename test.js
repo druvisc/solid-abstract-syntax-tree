@@ -76,7 +76,7 @@ const multiply = Multiply(Value(1), Value(2));
 assert.strictEqual(2, multiply.result());
 // test('toString returns correct string value')
 assert.strictEqual("(1 x 2)", multiply.toString());
-// test('throws on right-hand side non-resultable input')
+// test('throws on left-hand side non-resultable input')
 assert.throws(
   () => Multiply("abc", Value(2)),
   new Error(`The operation "x" is missing an operand!`)
@@ -94,7 +94,7 @@ const divide = Divide(Value(1), Value(2));
 assert.strictEqual(0.5, divide.result());
 // test('toString returns correct string value')
 assert.strictEqual("(1 ÷ 2)", divide.toString());
-// test('throws on right-hand side non-resultable input')
+// test('throws on left-hand side non-resultable input')
 assert.throws(
   () => Divide("abc", Value(2)),
   new Error(`The operation "÷" is missing an operand!`)
@@ -109,7 +109,6 @@ assert.throws(
   () => Divide(Value(1), Value(0)),
   new Error(`The right-hand side operand "0" for Divide must be non-zero!`)
 );
-// test('throws on right-hand side resultable zero')
 assert.throws(
   () => Divide(Value(1), Add(Subtract(Value(7), Value(8)), Value(1))),
   new Error(
